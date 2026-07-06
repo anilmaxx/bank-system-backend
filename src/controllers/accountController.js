@@ -64,3 +64,32 @@ exports.getAccountById = async (req, res) => {
   }
     
 }
+
+exports.getAllAccounts = async (req, res) => {
+    try {
+        const accounts = await Account.find().populate('user', ['name', 'email']);
+        res.json(accounts);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+  }
+}
+
+exports.updateAccountStatus = async (req, res) => {
+    try{
+        const { status } = req.body;
+        if(!['active', 'blocked'].includes(status)){
+            return res.status(400).json({ msg: 'Invalid status value' });
+        }
+        const account = await Account.findById(req.params.id);
+        if (!account) {
+           return res.status(404).json({ msg: 'Account not found' });
+        }
+        account.status = status;
+        await account.save();
+        res.json({ msg: `Account status updated to ${status}`, account });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+}

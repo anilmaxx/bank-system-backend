@@ -14,5 +14,13 @@ router.get('/me', auth, accountController.getMyAccounts);
 //GET /api/account/:accountNumber = (Admin only)
 router.get('/:id', auth, admin, accountController.getAccountById);
 
+//GET /api/account = (Admin only)
+router.get('/', auth, admin, accountController.getAllAccounts);
+
+//PATCH /api/account/:id/status = (Admin only)
+router.patch('/:id/status', auth, admin, accountController.updateAccountStatus);
+
+
+
 
 module.exports = router;
