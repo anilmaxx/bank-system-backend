@@ -9,4 +9,7 @@ router.post('/deposit', auth, transactionController.deposit);
 
 //POST /api/transactions/withdraw = (user)
 router.post('/withdraw', auth, transactionController.withdraw);
+
+//POST /api/transactions/transfer = (user)
+router.post('/transfer', auth, transactionController.transfer);
 module.exports = router;
